@@ -11,6 +11,14 @@ public class G{
   public static Color rndColor(){return new Color(rnd(256),rnd(256),rnd(256)); }
   public static void fillBack(Graphics g){g.setColor(Color.WHITE); g.fillRect(0,0,3000,3000);}
   public static void fillBackground(Graphics g, Color c){BACKGROUND_RECT.fill(g,c);}
+  public static void spline(Graphics g, int ax, int ay, int bx, int by, int cx, int cy, int n){
+    if(n == 0){g.drawLine(ax, ay, cx, cy); return;}
+    int abx = (ax+bx)/2, aby = (ay+by)/2;
+    int bcx = (bx+cx)/2, bcy = (by+cy)/2;
+    int abcx = (abx+bcx)/2, abcy = (aby+bcy)/2;
+    spline(g, ax, ay, abx, aby, abcx, abcy, n-1);
+    spline(g, abcx, abcy, bcx, bcy, cx, cy, n-1);
+  }
   //-----------------------V------------------------
   public static class V{
     public int x,y;
@@ -24,6 +32,12 @@ public class G{
     public VS(int x, int y, int w, int h){loc = new V(x,y); size = new V(w,h);}
     public void fill(Graphics g, Color c){g.setColor(c); g.fillRect(loc.x,loc.y,size.x,size.y);}
     public boolean hit(int x, int y){return loc.x<=x && loc.y <=y && x<=(loc.x+size.x) && y<=(loc.y+size.y);}
+    public int xL(){return loc.x;}
+    public int xM(){return loc.x+size.x/2;}
+    public int xH(){return loc.x+ size.x;}
+    public int yL(){return loc.y;}
+    public int yM(){return loc.y+size.y/2;}
+    public int yH(){return loc.y+size.y;}
   }
   //-----------------------LoHi---------------------
   public static class LoHi{}
