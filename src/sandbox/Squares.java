@@ -19,7 +19,7 @@ public class Squares extends WinApp implements ActionListener {
   public static G.V mouseDelta = new G.V(0,0);
   public static boolean showSpine = false;
   public static Timer timer;
-  public static G.V  pressedLoc= new G.V(0,0);
+  public static G.V pressedLoc= new G.V(0,0);
   public static I.Area curArea;
   public static Square lastSquare;
   public static Square.List squares = new Square.List();

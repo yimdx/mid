@@ -6,7 +6,10 @@ import java.util.Random;
 public class G{
   public static Random RND = new Random();
   public static final VS BACKGROUND_RECT = new VS(0,0,3000,3000);
-
+  public static G.V LEFT = new G.V(-1, 0);
+  public static G.V RIGHT = new G.V(1, 0);
+  public static G.V UP = new G.V(0, -1);
+  public static G.V DOWN = new G.V(0, 1);
   public static int rnd(int max){return RND.nextInt(max);}
   public static Color rndColor(){return new Color(rnd(256),rnd(256),rnd(256)); }
   public static void fillBack(Graphics g){g.setColor(Color.WHITE); g.fillRect(0,0,3000,3000);}
@@ -24,6 +27,7 @@ public class G{
     public int x,y;
     public V(int x, int y){this.set(x,y);}
     public void set(int x, int y){this.x = x; this.y = y;}
+    public void set(V v){this.x = v.x; this.y = v.y;}
     public void add(V v){x += v.x; y += v.y;} // vector addition
   }
   //-----------------------VS-----------------------
