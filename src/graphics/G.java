@@ -32,6 +32,7 @@ public class G{
     public void set(int x, int y){this.x = x; this.y = y;}
     public void set(V v){this.x = v.x; this.y = v.y;}
     public void add(V v){x += v.x; y += v.y;} // vector addition
+    public void blend(V v, int k){set((k*x+v.x)/(k+1), (k*y+v.y)/(k+1));}
     // Transform
     public void setT(V v){set(v.tx(), v.ty());}
     public int tx(){return x*T.n/T.d+T.dx;}

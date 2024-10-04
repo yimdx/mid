@@ -7,12 +7,12 @@ import music.UC;
 import reaction.Ink;
 
 import java.awt.*;
-import reaction.Ink.Buffer;
+import reaction.Shape;
 
 public class PaintInk extends WinApp {
 
   public static Ink.List inkList = new Ink.List();
-
+  public static Shape.Prototype.List pList = new Shape.Prototype.List();
   public PaintInk(){
     super("paint ink", UC.screenWidth, UC.screenHeight);
 //    inkList.add(new Ink());
@@ -30,6 +30,7 @@ public class PaintInk extends WinApp {
      g.setColor(dist > UC.noMatchDist? Color.RED : Color.BLACK);
      g.drawString("dist: " + dist, 600, 60);
     }
+    pList.show(g);
 //    g.fillRect(100,100,100,100);
   }
 
@@ -45,7 +46,18 @@ public class PaintInk extends WinApp {
 
   public void mouseReleased(MouseEvent me){
     Ink.BUFFER.up(me.getX(), me.getY());
-    inkList.add(new Ink());
+    Ink ink = new Ink();
+    inkList.add(ink);
+    Shape.Prototype proto;
+    if(pList.bestDist(ink.norm) < UC.noMatchDist){
+      proto = Shape.Prototype.List.bestMatch;
+      proto.blend(ink.norm);
+//      Shape.Prototype.List.bestMatch.blend(ink.norm);
+    }else{
+      proto = new Shape.Prototype();
+      pList.add(new Shape.Prototype());
+    }
+    ink.norm = proto;
     repaint();
   }
 
