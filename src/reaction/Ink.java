@@ -2,6 +2,7 @@ package reaction;
 
 import graphics.G;
 import graphics.G.V;
+import java.io.Serializable;
 import music.I;
 import music.UC;
 
@@ -24,7 +25,7 @@ public class Ink implements I.Show {
     norm.drawAt(g, vs);
   }
   //---------------------------Norm---------------------
-  public static class Norm extends G.PL{
+  public static class Norm extends G.PL implements Serializable {
     public static final int N = UC.normSampleSize, MAX = UC.normCoordMax;
     public static final G.VS NCS = new G.VS(0, 0, MAX, MAX);
     public Norm(){
@@ -67,7 +68,7 @@ public class Ink implements I.Show {
     public void dn(int x, int y) {clear(); bbox.set(x,y); add(x, y);}
     public void drag(int x, int y) {add(x, y);}
     public void up(int x, int y) {add(x, y);}
-    public void show(Graphics g) {drawN(g, n); bbox.draw(g);}
+    public void show(Graphics g) {drawN(g, n); /*bbox.draw(g);*/}
     public boolean hit(int x, int y) {return true;}
     public void subSample(G.PL pl){
       int k = pl.size();

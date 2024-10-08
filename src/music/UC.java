@@ -9,4 +9,5 @@ public class UC {
   public static final int normCoordMax = 1000;
   public static final int noMatchDist = 700_000;
   public static final int dotThreshold = 5;
+  public static String shapeDatabaseFileName = "shapeDB.dat";
 }

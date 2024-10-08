@@ -13,6 +13,7 @@ public class PaintInk extends WinApp {
 
   public static Ink.List inkList = new Ink.List();
   public static Shape.Prototype.List pList = new Shape.Prototype.List();
+  public static String recognize = "";
   public PaintInk(){
     super("paint ink", UC.screenWidth, UC.screenHeight);
 //    inkList.add(new Ink());
@@ -31,6 +32,7 @@ public class PaintInk extends WinApp {
      g.drawString("dist: " + dist, 600, 60);
     }
     pList.show(g);
+    g.drawString("recognize: "+recognize, 600, 90);
 //    g.fillRect(100,100,100,100);
   }
 
@@ -47,6 +49,8 @@ public class PaintInk extends WinApp {
   public void mouseReleased(MouseEvent me){
     Ink.BUFFER.up(me.getX(), me.getY());
     Ink ink = new Ink();
+    Shape s = Shape.recognize(ink); // can fill
+    recognize = "recognize: "+((s!=null)?s.name:"unrecognized");
     inkList.add(ink);
     Shape.Prototype proto;
     if(pList.bestDist(ink.norm) < UC.noMatchDist){

@@ -1,6 +1,7 @@
 package graphics;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Random;
 
 public class G{
@@ -24,7 +25,7 @@ public class G{
     spline(g, abcx, abcy, bcx, bcy, cx, cy, n-1);
   }
   //-----------------------V------------------------
-  public static class V{
+  public static class V implements Serializable {
     public static Transform T = new Transform();
     public int x,y;
     public V(int x, int y){this.set(x,y);}
@@ -58,7 +59,7 @@ public class G{
     }
   }
   //-----------------------VS-----------------------
-  public static class VS{
+  public static class VS implements Serializable {
     public V loc, size;
     public VS(int x, int y, int w, int h){loc = new V(x,y); size = new V(w,h);}
     public void fill(Graphics g, Color c){g.setColor(c); g.fillRect(loc.x,loc.y,size.x,size.y);}
@@ -71,7 +72,7 @@ public class G{
     public int yH(){return loc.y+size.y;}
   }
   //-----------------------LoHi---------------------
-  public static class LoHi{
+  public static class LoHi implements Serializable {
     public int lo, hi;
     public LoHi(int lo, int hi){this.lo = lo; this.hi = hi;}
     public void set(int v){this.lo = v; this.hi = v;}
@@ -79,7 +80,7 @@ public class G{
     public int size(){return (hi - lo) > 0 ? (hi-lo) : 1;}
   }
   //-----------------------BBox---------------------
-  public static class BBox{
+  public static class BBox implements Serializable {
     public LoHi h, v; // horizontal vertical
     public BBox(){this.h = new LoHi(0,0); this.v = new LoHi(0,0);}
     public void set(int x, int y){h.set(x); v.set(y);}
@@ -89,7 +90,7 @@ public class G{
     public void draw(Graphics g){g.drawRect(h.lo, v.lo, h.size(), v.size());}
   }
   //-----------------------PL-----------------------
-  public static class PL{
+  public static class PL implements Serializable {
     //poly line
     public V[] points;
 

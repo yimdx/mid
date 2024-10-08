@@ -6,10 +6,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Objects;
 import music.UC;
 
-public class ShapeTrainer extends WinApp  {
+public class ShapeTrainerOld extends WinApp  {
   public static String UNKNOWN = " <- currently unknown";
   public static String ILLEGAL = " <- this name NOT legal";
   public static String KNOWN = "<- known name";
@@ -17,7 +16,7 @@ public class ShapeTrainer extends WinApp  {
   public static String curName = "";
   public static String curState = ILLEGAL;
 
-  public ShapeTrainer() {
+  public ShapeTrainerOld() {
     super("Shape Trainer", UC.screenWidth, UC.screenHeight);
   }
 
@@ -56,24 +55,28 @@ public class ShapeTrainer extends WinApp  {
   }
 
   public void mouseReleased(MouseEvent me) {
-    if(!curState.equals(ILLEGAL)){
-      Ink ink = new Ink();
-      Shape.Prototype proto;
-      if(pList == null){
-        Shape s = new Shape(curName);
-        Shape.DB.put(curName, s);
-        pList = s.prototypeList;
-      }
-      if(pList.bestDist(ink.norm) < UC.noMatchDist){
-        proto = Shape.Prototype.List.bestMatch;
-        proto.blend(ink.norm);
-      }else{
-        proto = new Shape.Prototype();
-        pList.add(proto);
-      }
-      setState();
-    }
+    Ink ink = new Ink();
+    Shape.DB.train(curName, ink.norm);
+    setState();
     repaint();
+//    if(!curState.equals(ILLEGAL)){
+//      Ink ink = new Ink();
+//      Shape.Prototype proto;
+//      if(pList == null){
+//        Shape s = new Shape(curName);
+//        Shape.DB.put(curName, s);
+//        pList = s.prototypeList;
+//      }
+//      if(pList.bestDist(ink.norm) < UC.noMatchDist){
+//        proto = Shape.Prototype.List.bestMatch;
+//        proto.blend(ink.norm);
+//      }else{
+//        proto = new Shape.Prototype();
+//        pList.add(proto);
+//      }
+//      setState();
+//    }
+//    repaint();
   }
 
   public void keyTyped(KeyEvent ke) {
@@ -81,11 +84,14 @@ public class ShapeTrainer extends WinApp  {
     System.out.println("typed "+c);
     // 0x0D = return. 0x0A = line feed char
     curName = (c == ' ' || c == 0x0D || c == 0x0A) ? "" : curName+c;
+    if(c == 0x0D || c == 0x0A){
+      Shape.Database.save();
+    }
     setState();
     repaint();
   }
   public static void main(String[] args) {
-    PANEL = new ShapeTrainer();
+    PANEL = new ShapeTrainerOld();
     WinApp.launch();
   }
 }
